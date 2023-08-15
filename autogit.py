@@ -8,19 +8,6 @@ def is_git_repository():
     """Check if the current directory is a Git repository."""
     return os.path.isdir(".git")
 
-# REVISAR
-#def is_origin_github():
-#    """Check if the 'origin' remote of the Git repository points to GitHub."""
-#    try:
-#        # Get the details of the remote named 'origin'
-#        remote_details = subprocess.check_output(["git", "remote", "-v"], text=True)
-#        # Look for lines specifically related to 'origin' that also mention 'github.com'
-#        github_related_lines = [line for line in remote_details if 'origin' in line and 'github.com' in line]
-#        print(remote_details)
-#        return bool(github_related_lines)
-#    except subprocess.CalledProcessError:
-#        return False
-
 def execute_command(command, message="", capture_output=False):
     """Execute a shell command provided in the form of a string"""
     try:
@@ -69,17 +56,7 @@ def main():
             sys.exit(0)
     else:
         print("Confirmed: This directory contains a Git repository.\n")
-        # REVISAR
-#        if is_origin_github():
-#            print("Confirmed: This Git repository's 'origin' remote is linked to GitHub.\n")
-#        else:
-#            print("Warning: The 'origin' remote of this repository does not seem to point to GitHub.")
-#           print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
-#            print("\033[43mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add origin name_of_repository.git\033[0m\n")
-#            print("Exiting program...\n")
-#            sys.exit(0)
-
-    # Check if the present directory is linked to a GitHub repository
+        
     if not has_linked_github_repo():
         print("Warning: The present working directory is not linked to a GitHub repository!\n")
         print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
