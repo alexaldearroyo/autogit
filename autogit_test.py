@@ -74,7 +74,7 @@ def main():
 #            print("Confirmed: This Git repository's 'origin' remote is linked to GitHub.\n")
 #        else:
 #            print("Warning: The 'origin' remote of this repository does not seem to point to GitHub.")
-#            print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
+#           print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
 #            print("\033[43mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add origin name_of_repository.git\033[0m\n")
 #            print("Exiting program...\n")
 #            sys.exit(0)
@@ -82,10 +82,10 @@ def main():
     # Check if the present directory is linked to a GitHub repository
     if not has_linked_github_repo():
         print("Warning: The present working directory is not linked to a GitHub repository!\n")
-        choice = input("Do you wish to continue without linking to GitHub? (y/n): ").strip().lower()
-        if choice not in ['yes', 'y']:
-            print("Exiting program...")
-            sys.exit(0)
+        print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
+        print("\033[33mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add origin name_of_repository.git\033[0m\n")
+        print("Exiting program...\n")
+        sys.exit(0)
 
     #Asks user to commit to git
     choice = input("Do you want to add all changes in the repository? (y/n): ").strip().lower()

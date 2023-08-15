@@ -9,28 +9,40 @@ def is_git_repository():
     return os.path.isdir(".git")
 
 # REVISAR
-def is_origin_github():
-    """Check if the 'origin' remote of the Git repository points to GitHub."""
-    try:
-        # Get the details of the remote named 'origin'
-        remote_details = subprocess.check_output(["git", "remote", "-v"], text=True)
-        # Look for lines specifically related to 'origin' that also mention 'github.com'
-        github_related_lines = [line for line in remote_details if 'origin' in line and 'github.com' in line]
-        print(remote_details)
-        return bool(github_related_lines)
-    except subprocess.CalledProcessError:
-        return False
+#def is_origin_github():
+#    """Check if the 'origin' remote of the Git repository points to GitHub."""
+#    try:
+#        # Get the details of the remote named 'origin'
+#        remote_details = subprocess.check_output(["git", "remote", "-v"], text=True)
+#        # Look for lines specifically related to 'origin' that also mention 'github.com'
+#        github_related_lines = [line for line in remote_details if 'origin' in line and 'github.com' in line]
+#        print(remote_details)
+#        return bool(github_related_lines)
+#    except subprocess.CalledProcessError:
+#        return False
 
-def execute_command(command, message=""):
+def execute_command(command, message="", capture_output=False):
     """Execute a shell command provided in the form of a string"""
     try:
         if message:
-            subprocess.check_call(command.split() + [message])
+            completed_process = subprocess.run(command.split() + [message], capture_output=capture_output, text=True)
         else:
-            subprocess.check_call(command.split())
+            completed_process = subprocess.run(command.split(), capture_output=capture_output, text=True)
+        
+        if completed_process.returncode != 0:
+            print(f"Error executing command: {command}")
+            sys.exit(1)
+        
+        if capture_output:
+            return completed_process.stdout.strip()
     except subprocess.CalledProcessError as e:
         print(f"Error executing command: {command}")
         sys.exit(1)
+
+def has_linked_github_repo():
+    """Check if the Git repository in the present working directory is linked to a GitHub repository."""
+    remotes = execute_command("git remote -v", capture_output=True)
+    return "github.com" in remotes
 
 def initialize_git_repo():
     """Initialize a new Git repository in the current directory."""
@@ -58,14 +70,22 @@ def main():
     else:
         print("Confirmed: This directory contains a Git repository.\n")
         # REVISAR
-        if is_origin_github():
-            print("Confirmed: This Git repository's 'origin' remote is linked to GitHub.\n")
-        else:
-            print("Warning: The 'origin' remote of this repository does not seem to point to GitHub.")
-            print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
-            print("\033[43mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add origin name_of_repository.git\033[0m\n")
-            print("Exiting program...\n")
-            sys.exit(0)
+#        if is_origin_github():
+#            print("Confirmed: This Git repository's 'origin' remote is linked to GitHub.\n")
+#        else:
+#            print("Warning: The 'origin' remote of this repository does not seem to point to GitHub.")
+#           print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
+#            print("\033[43mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add origin name_of_repository.git\033[0m\n")
+#            print("Exiting program...\n")
+#            sys.exit(0)
+
+    # Check if the present directory is linked to a GitHub repository
+    if not has_linked_github_repo():
+        print("Warning: The present working directory is not linked to a GitHub repository!\n")
+        print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
+        print("\033[33mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add origin name_of_repository.git\033[0m\n")
+        print("Exiting program...\n")
+        sys.exit(0)
 
     #Asks user to commit to git
     choice = input("Do you want to add all changes in the repository? (y/n): ").strip().lower()
