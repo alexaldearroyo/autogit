@@ -2,7 +2,7 @@
 
 AutoGit is a tool designed to help automate your Git workflow. With this tool, you can easily perform various Git tasks without manually entering multiple commands.
 
-## Prerequisites
+## Considerations
 
 The tool expects that new Git repositories will be manually linked to a remote repository on GitHub through their website.
 
