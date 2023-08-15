@@ -38,7 +38,7 @@ def main():
 
         if choice in ['yes', 'y']:
             initialize_git_repo()
-            print("Git repository initialized!")
+            print("\nGit repository initialized!\n")
         else:
             print("Exiting program...")
             sys.exit(0)
@@ -46,6 +46,7 @@ def main():
     else:
         print("Confirmed: This directory contains a Git repository.\n")
 
+    #Asks user to commit to git
     choice = input("Do you want to add all changes in the repository? (y/n): ").strip().lower()
     
     if choice in ['yes', 'y']:
