@@ -87,7 +87,7 @@ def main():
         else:
             print("Warning: The 'origin' remote of this repository does not seem to point to GitHub.")
             print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
-            print("\033[106m\033[97mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add origin name_of_repository.git\033[0m\n")
+            print("\033[43mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add origin name_of_repository.git\033[0m\n")
             #choice = input("Do you want to continue anyway? (y/n): ").strip().lower()
 
             #if choice not in ['yes', 'y']:
