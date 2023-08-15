@@ -4,6 +4,10 @@ import subprocess
 import sys
 import os
 
+def is_git_repository():
+    """Check if the current directory is a Git repository."""
+    return os.path.isdir(".git")
+
 def execute_command(command, message=""):
     try:
         if message:
@@ -14,22 +18,33 @@ def execute_command(command, message=""):
         print(f"Error executing command: {command}")
         sys.exit(1)
 
-
-def is_git_repository():
-    try:
-        subprocess.check_call(["git", "status"], stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-        return True
-    except subprocess.CalledProcessError:
-        return False
+def initialize_git_repo():
+    """Initialize a new Git repository in the current directory."""
+    execute_command("git init")
 
 def main():
+    print("\nThis is the test version of autogit\n")
+
     # Ensure we're operating in the calling directory
     os.chdir(os.getcwd())  # This is generally redundant but ensures you're in the calling directory
 
+    # Inform the user that the program is checking for a Git repository
+    print("Checking if the present working directory contains a Git repository...")
+
+    # Check if the present directory is a Git repository
     if not is_git_repository():
-        print("This directory is not a Git repository. Initializing...")
-        execute_command("git init")
-        print("Git repository created in the working directory")
+        print("The present working directory is not a Git repository!\n")
+        choice = input("Would you like to initialize a new Git repository here? (y/n): ").strip().lower()
+
+        if choice in ['yes', 'y']:
+            initialize_git_repo()
+            print("Git repository initialized!")
+        else:
+            print("Exiting program...")
+            sys.exit(0)
+
+    else:
+        print("Confirmed: This directory contains a Git repository.\n")
 
     choice = input("Do you want to add all changes in the repository? (y/n): ").strip().lower()
     
