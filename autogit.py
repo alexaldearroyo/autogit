@@ -60,7 +60,7 @@ def main():
     if not has_linked_github_repo():
         print("Warning: The present working directory is not linked to a GitHub repository!\n")
         print("For the program to function correctly, this Git repository should be linked to a GitHub repository.")
-        print("\033[33mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add origin name_of_repository.git\033[0m\n")
+        print("\033[33mCreate a repository on the GitHub website and connect it to the local repository using the command git remote add url_of_repository.git\033[0m\n")
         print("Exiting program...\n")
         sys.exit(0)
 
